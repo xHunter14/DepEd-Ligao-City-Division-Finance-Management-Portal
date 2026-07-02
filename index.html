@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DepEd Ligao City Division Finance Management Portal</title>
+    <title>DepEd SDO Ligao City Division Finance Management Portal</title>
     <meta
       name="description"
       content="A modern finance management portal for DepEd Ligao City Division, built for responsive access on all devices."
@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -32,11 +33,13 @@
       </button>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#features">Features</a>
+        <a href="#dashboard">Dashboard</a>
         <a href="#services">Services</a>
-        <a href="#announcements">Announcements</a>
+        <a href="#announcements">Advisories</a>
+        <a href="#support">Resources</a>
+        <a href="#faqs">FAQs</a>
         <a href="#reports">Reports</a>
         <a href="#contact_form">Contact</a>
-        <a href="#access">Access</a>
       </nav>
       <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
         🌙
@@ -108,6 +111,80 @@
         </div>
       </section>
 
+      <section id="dashboard" class="section alt">
+        <div class="section-heading">
+          <p class="eyebrow">Dashboard</p>
+          <h2>MOOE Fund Monitoring and Real-time Tracking</h2>
+        </div>
+        
+        <!-- Summary Cards -->
+        <div class="dashboard-summary">
+          <div class="summary-card">
+            <p class="summary-label">Total Allocation</p>
+            <p class="summary-value">₱45,000,000</p>
+            <p class="summary-detail">All schools & offices</p>
+          </div>
+          <div class="summary-card">
+            <p class="summary-label">Amount Downloaded</p>
+            <p class="summary-value">₱38,500,000</p>
+            <p class="summary-detail">85.6% utilization</p>
+          </div>
+          <div class="summary-card">
+            <p class="summary-label">Liquidated Amount</p>
+            <p class="summary-value">₱32,200,000</p>
+            <p class="summary-detail">71.6% liquidation</p>
+          </div>
+          <div class="summary-card">
+            <p class="summary-label">Unliquidated Balance</p>
+            <p class="summary-value">₱6,300,000</p>
+            <p class="summary-detail">14.0% pending</p>
+          </div>
+        </div>
+
+        <!-- Dashboard Table -->
+        <div class="dashboard-table-container">
+          <table class="dashboard-table">
+            <thead>
+              <tr>
+                <th>Total Allocation</th>
+                <th>Amount Downloaded</th>
+                <th>Downloading Rate</th>
+                <th>Liquidated Amount</th>
+                <th>Liquidation Rate</th>
+                <th>Unliquidated Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>₱45,000,000</td>
+                <td>₱38,500,000</td>
+                <td>85.6%</td>
+                <td>₱32,200,000</td>
+                <td>71.6%</td>
+                <td>₱6,300,000</td>
+              </tr>
+            </tbody>
+          </table>
+          <button class="button primary" type="button" id="viewDetailsBtn">VIEW DETAILS</button>
+        </div>
+
+        <!-- Interactive Charts -->
+        <div class="dashboard-charts">
+          <div class="chart-card">
+            <h3>MOOE Utilization</h3>
+            <canvas id="utilizationChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Liquidation Submission Rate</h3>
+            <canvas id="liquidationChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Cash Advance Monitoring</h3>
+            <canvas id="cashAdvanceChart"></canvas>
+          </div>
+        </div>
+      </section>
+
       <section id="services" class="section alt">
         <div class="section-heading">
           <p class="eyebrow">Support services</p>
@@ -132,18 +209,84 @@
       <section id="announcements" class="section alt">
         <div class="section-heading">
           <p class="eyebrow">Transparency notice</p>
-          <h2>Latest financial memos, updates, and fiscal guidelines.</h2>
+          <h2>Deadlines and Advisories</h2>
         </div>
         <div class="announcement-panel">
           <div class="announcement-item">
-            <h3>Division Financial Memoranda</h3>
-            <p>Download the latest issuance, circulars, and administrative guidelines for finance-related transactions.</p>
-            <button class="button secondary modal-trigger" type="button" data-title="Division Financial Memoranda" data-content="Temporary notice: the latest division memos and circulars will be available here soon for download and review.">View Announcements</button>
+            <h3>Upcoming Submission Deadlines</h3>
+            <p>Track important compliance deadlines for liquidations, reports, and submissions to stay on schedule.</p>
+            <button class="button secondary modal-trigger" type="button" data-title="Upcoming Submission Deadlines" data-content="Key submission deadlines for cash advance liquidations, quarterly reports, and compliance documentation as per COA and DepEd guidelines.">View Deadlines</button>
           </div>
           <div class="announcement-item">
-            <h3>Fiscal Updates</h3>
-            <p>Stay informed on budget status, reporting requirements, and compliance reminders issued by the division.</p>
-            <button class="button secondary modal-trigger" type="button" data-title="Fiscal Updates" data-content="Temporary notice: recent budget and compliance updates will be posted here as soon as they are released.">Read Updates</button>
+            <h3>DepEd Memoranda & Circulars</h3>
+            <p>Access the latest finance issuances, memoranda, and advisories for all personnel and school leaders.</p>
+            <button class="button secondary modal-trigger" type="button" data-title="DepEd Memoranda & Circulars" data-content="Latest memoranda from DepEd Central Office, divisional issuances, and COA circulars relevant to finance operations and cash advance management.">View Advisories</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="support" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Support resources</p>
+          <h2>Forms, Templates, and Downloadable Resources</h2>
+        </div>
+        <div class="support-grid">
+          <div class="support-card">
+            <h3>Liquidation Forms and Templates</h3>
+            <p>Download standardized forms for cash advance liquidations, reimbursement requests, and compliance documentation.</p>
+          </div>
+          <div class="support-card">
+            <h3>Operational Checklists</h3>
+            <p>Access comprehensive checklists for travel expenses, MOOE transactions, and document requirements.</p>
+          </div>
+          <div class="support-card">
+            <h3>Reference Guides</h3>
+            <p>Get quick access to transaction categories, UACS codes, and procedural guidelines for all finance activities.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="faqs" class="section alt">
+        <div class="section-heading">
+          <p class="eyebrow">Frequently Asked Questions</p>
+          <h2>Common Questions and Guidance on Finance Processes</h2>
+        </div>
+        <div class="faq-container">
+          <div class="faq-item">
+            <button class="faq-toggle" type="button" aria-expanded="false">
+              <h3>When should a cash advance be liquidated?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content" hidden>
+              <p>Cash advances shall be liquidated within the period prescribed under applicable COA rules, depending on the type of cash advance. Failure to liquidate within the prescribed period may result in the withholding of additional cash advances and other sanctions.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-toggle" type="button" aria-expanded="false">
+              <h3>Whose name should appear on the Official Receipt?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content" hidden>
+              <p>The Official Receipt or Sales Invoice should generally be issued in the name of the school or the implementing government agency, not in the personal name of the employee, unless specifically justified under applicable rules.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-toggle" type="button" aria-expanded="false">
+              <h3>What documents are needed for travel expense reimbursement?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content" hidden>
+              <p>Required documents include: Disbursement Voucher, Approved Itinerary, Travel Order, Certificate of Travel Completion, Boarding Pass or Ticket, Terminal Fees receipts, and Reimbursement Expense Receipt (RER) for expenses exceeding PHP 300.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-toggle" type="button" aria-expanded="false">
+              <h3>How do I monitor my school's MOOE allocation?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content" hidden>
+              <p>You can view your school's MOOE allocation, utilization rates, and liquidation status through the Dashboard section. The system provides real-time tracking of total allocation, downloaded amounts, and unliquidated balances.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -227,6 +370,124 @@
           <a class="button primary" href="#">Open Portal</a>
         </div>
       </section>
+
+      <!-- Details Modal -->
+      <div id="detailsModal" class="modal-overlay" hidden>
+        <div class="modal modal-lg">
+          <button class="modal-close" type="button">&times;</button>
+          <h3>MOOE Fund Details by School</h3>
+          
+          <!-- Filters -->
+          <div class="details-filters">
+            <div class="filter-group">
+              <label for="filterMonth">Month</label>
+              <select id="filterMonth" class="filter-input">
+                <option value="">All Months</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="filterYear">Year</label>
+              <select id="filterYear" class="filter-input">
+                <option value="">All Years</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="filterSchool">School</label>
+              <select id="filterSchool" class="filter-input">
+                <option value="">All Schools</option>
+                <option value="EES">Elias Elementary School</option>
+                <option value="MHS">Maharlika High School</option>
+                <option value="CES">Camantiles Elementary School</option>
+                <option value="SHS">Sta. Rosa High School</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="filterHead">School Head</label>
+              <select id="filterHead" class="filter-input">
+                <option value="">All School Heads</option>
+                <option value="head1">Ms. Maria Santos</option>
+                <option value="head2">Mr. Juan Dela Cruz</option>
+                <option value="head3">Dr. Ana Rodriguez</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Details Table -->
+          <div class="details-table-wrapper">
+            <table class="details-table">
+              <thead>
+                <tr>
+                  <th>School</th>
+                  <th>School Head</th>
+                  <th>Total Allocation</th>
+                  <th>Amount Downloaded</th>
+                  <th>Downloading Rate</th>
+                  <th>Liquidated Amount</th>
+                  <th>Liquidation Rate</th>
+                  <th>Unliquidated Balance</th>
+                </tr>
+              </thead>
+              <tbody id="detailsTableBody">
+                <tr>
+                  <td>Elias Elementary School</td>
+                  <td>Ms. Maria Santos</td>
+                  <td>₱8,500,000</td>
+                  <td>₱7,250,000</td>
+                  <td>85.3%</td>
+                  <td>₱6,100,000</td>
+                  <td>71.8%</td>
+                  <td>₱1,150,000</td>
+                </tr>
+                <tr>
+                  <td>Maharlika High School</td>
+                  <td>Mr. Juan Dela Cruz</td>
+                  <td>₱12,000,000</td>
+                  <td>₱10,200,000</td>
+                  <td>85.0%</td>
+                  <td>₱8,900,000</td>
+                  <td>74.2%</td>
+                  <td>₱1,300,000</td>
+                </tr>
+                <tr>
+                  <td>Camantiles Elementary School</td>
+                  <td>Ms. Maria Santos</td>
+                  <td>₱7,500,000</td>
+                  <td>₱6,300,000</td>
+                  <td>84.0%</td>
+                  <td>₱5,200,000</td>
+                  <td>69.3%</td>
+                  <td>₱1,100,000</td>
+                </tr>
+                <tr>
+                  <td>Sta. Rosa High School</td>
+                  <td>Dr. Ana Rodriguez</td>
+                  <td>₱9,000,000</td>
+                  <td>₱7,850,000</td>
+                  <td>87.2%</td>
+                  <td>₱6,800,000</td>
+                  <td>75.6%</td>
+                  <td>₱1,050,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </main>
 
     <script src="script.js"></script>
@@ -234,11 +495,13 @@
     <footer class="footer">
       <div class="footer-links" aria-label="Footer navigation">
         <a href="#features">Features</a>
+        <a href="#dashboard">Dashboard</a>
         <a href="#services">Services</a>
-        <a href="#announcements">Announcements</a>
+        <a href="#announcements">Advisories</a>
+        <a href="#support">Resources</a>
+        <a href="#faqs">FAQs</a>
         <a href="#reports">Reports</a>
         <a href="#contact_form">Contact</a>
-        <a href="#access">Access</a>
       </div>
       <div class="footer-content">
         <div class="footer-seals">

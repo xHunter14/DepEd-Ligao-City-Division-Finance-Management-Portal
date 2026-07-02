@@ -184,3 +184,213 @@ if (contactForm) {
     }
   });
 }
+
+const faqToggles = document.querySelectorAll('.faq-toggle');
+
+faqToggles.forEach((toggle) => {
+  toggle.addEventListener('click', () => {
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    const content = toggle.closest('.faq-item')?.querySelector('.faq-content');
+
+    toggle.setAttribute('aria-expanded', String(!isExpanded));
+
+    if (content) {
+      content.hidden = isExpanded;
+    }
+  });
+});
+
+// Dashboard Chart Configuration
+const chartConfig = {
+  font: {
+    family: "'Inter', sans-serif",
+    size: 12
+  },
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'bottom'
+    }
+  }
+};
+
+// MOOE Utilization Chart
+const utilizationCtx = document.getElementById('utilizationChart')?.getContext('2d');
+if (utilizationCtx) {
+  new Chart(utilizationCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Downloaded', 'Not Downloaded'],
+      datasets: [{
+        data: [85.6, 14.4],
+        backgroundColor: ['#1288a8', '#e9f5ff'],
+        borderColor: ['#0f4c81', '#dce8f3'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      ...chartConfig,
+      plugins: {
+        ...chartConfig.plugins,
+        tooltip: {
+          callbacks: {
+            label: (context) => context.label + ': ' + context.parsed + '%'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Liquidation Submission Rate Chart
+const liquidationCtx = document.getElementById('liquidationChart')?.getContext('2d');
+if (liquidationCtx) {
+  new Chart(liquidationCtx, {
+    type: 'bar',
+    data: {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+      datasets: [{
+        label: 'Liquidation Rate (%)',
+        data: [68, 70, 72, 71, 73, 71.6],
+        backgroundColor: '#1288a8',
+        borderColor: '#0f4c81',
+        borderWidth: 1,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...chartConfig,
+      indexAxis: undefined,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          ticks: {
+            callback: (value) => value + '%'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Cash Advance Monitoring Chart
+const cashAdvanceCtx = document.getElementById('cashAdvanceChart')?.getContext('2d');
+if (cashAdvanceCtx) {
+  new Chart(cashAdvanceCtx, {
+    type: 'line',
+    data: {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+      datasets: [{
+        label: 'Outstanding Cash Advances',
+        data: [2500000, 2300000, 1800000, 1450000],
+        borderColor: '#1288a8',
+        backgroundColor: 'rgba(18, 136, 168, 0.1)',
+        borderWidth: 3,
+        tension: 0.3,
+        fill: true,
+        pointBackgroundColor: '#1288a8',
+        pointBorderColor: '#0f4c81',
+        pointRadius: 5
+      }]
+    },
+    options: {
+      ...chartConfig,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: (value) => '₱' + (value / 1000000).toFixed(1) + 'M'
+          }
+        }
+      }
+    }
+  });
+}
+
+// Details Modal Handling
+const detailsModal = document.getElementById('detailsModal');
+const viewDetailsBtn = document.getElementById('viewDetailsBtn');
+const detailsModalClose = detailsModal?.querySelector('.modal-close');
+
+if (viewDetailsBtn && detailsModal) {
+  viewDetailsBtn.addEventListener('click', () => {
+    detailsModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+if (detailsModalClose && detailsModal) {
+  detailsModalClose.addEventListener('click', () => {
+    detailsModal.hidden = true;
+    document.body.style.overflow = '';
+  });
+  
+  detailsModal.addEventListener('click', (event) => {
+    if (event.target === detailsModal) {
+      detailsModal.hidden = true;
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+// Details Table Filtering
+const filterMonth = document.getElementById('filterMonth');
+const filterYear = document.getElementById('filterYear');
+const filterSchool = document.getElementById('filterSchool');
+const filterHead = document.getElementById('filterHead');
+const detailsTableBody = document.getElementById('detailsTableBody');
+
+const allDetails = [
+  { school: 'Elias Elementary School', head: 'Ms. Maria Santos', month: '06', year: '2026', allocation: '₱8,500,000', downloaded: '₱7,250,000', downRate: '85.3%', liquidated: '₱6,100,000', liquidRate: '71.8%', unliquidated: '₱1,150,000' },
+  { school: 'Maharlika High School', head: 'Mr. Juan Dela Cruz', month: '06', year: '2026', allocation: '₱12,000,000', downloaded: '₱10,200,000', downRate: '85.0%', liquidated: '₱8,900,000', liquidRate: '74.2%', unliquidated: '₱1,300,000' },
+  { school: 'Camantiles Elementary School', head: 'Ms. Maria Santos', month: '06', year: '2026', allocation: '₱7,500,000', downloaded: '₱6,300,000', downRate: '84.0%', liquidated: '₱5,200,000', liquidRate: '69.3%', unliquidated: '₱1,100,000' },
+  { school: 'Sta. Rosa High School', head: 'Dr. Ana Rodriguez', month: '06', year: '2026', allocation: '₱9,000,000', downloaded: '₱7,850,000', downRate: '87.2%', liquidated: '₱6,800,000', liquidRate: '75.6%', unliquidated: '₱1,050,000' }
+];
+
+function applyFilters() {
+  const monthValue = filterMonth?.value || '';
+  const yearValue = filterYear?.value || '';
+  const schoolValue = filterSchool?.value || '';
+  const headValue = filterHead?.value || '';
+
+  const filtered = allDetails.filter(item => {
+    const monthMatch = !monthValue || item.month === monthValue;
+    const yearMatch = !yearValue || item.year === yearValue;
+    const schoolMatch = !schoolValue || item.school.includes(schoolValue);
+    const headMatch = !headValue || item.head.includes(headValue);
+    return monthMatch && yearMatch && schoolMatch && headMatch;
+  });
+
+  if (detailsTableBody) {
+    detailsTableBody.innerHTML = filtered.map(item => `
+      <tr>
+        <td>${item.school}</td>
+        <td>${item.head}</td>
+        <td>${item.allocation}</td>
+        <td>${item.downloaded}</td>
+        <td>${item.downRate}</td>
+        <td>${item.liquidated}</td>
+        <td>${item.liquidRate}</td>
+        <td>${item.unliquidated}</td>
+      </tr>
+    `).join('');
+  }
+}
+
+filterMonth?.addEventListener('change', applyFilters);
+filterYear?.addEventListener('change', applyFilters);
+filterSchool?.addEventListener('change', applyFilters);
+filterHead?.addEventListener('change', applyFilters);
+
+// Escape key to close details modal
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && detailsModal && !detailsModal.hidden) {
+    detailsModal.hidden = true;
+    document.body.style.overflow = '';
+  }
+});
+
+
